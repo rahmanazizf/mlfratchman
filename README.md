@@ -21,6 +21,7 @@ Persamaan di atas adalah persamaan umum untuk mencari jarak antara dua titik den
 ![image](https://github.com/rahmanazizf/mlfratchman/assets/100136072/85658ac9-a1d5-4593-b94f-f997a6742c80)
 ## Algoritma
 ![Untitled](https://github.com/rahmanazizf/mlfratchman/assets/100136072/6f492e40-11af-4999-a351-70222256a646)
+Diberikan suatu data dengan ukuran tertentu. Algoritma KNN pertama akan menghitung jarak data yang ingin kita prediksi ke setiap titik data yang telah diketahui kelas/labelnya (data train). Setelah jarak antara titik data target ke setiap titik data train didapatkan, kita perlu menentukan sebanyak k titik data terdekat terhadap titik data target. Dari sebanyak k tetangga yang kita sudah tentukan sebelumnya, kita dapat mengekstrak indeks baris dari data tetangga tersebut dan menggunakannya untuk mendapatkan nilai kelas/label dari baris data yang bersesuaian. Terakhir lalukan prediksi dan sesuaikan metode prediksi dengan kasus yang ingin kita selesaikan. Jika kita ingin melakukan klasifikasi, lakukan prediksi dengan majority vote (probabilitas). Namun jika ingin melakukan regresi, gunakan perhitungan rata-rata.
 ### KNN Classifier
 Metode prediksi KNN classifier menggunakan perhitungan probabilitas. Argumen kelas yang menghasilkan nilai probabilitas tertinggi akan menjadi nilai prediksi kelas titik data target.
 ![image](https://github.com/rahmanazizf/mlfratchman/assets/100136072/22d801fd-572f-4576-b52b-fe5f1178e92e)
