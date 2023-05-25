@@ -23,3 +23,9 @@ Persamaan di atas adalah persamaan umum untuk mencari jarak antara dua titik den
 ![image](https://github.com/rahmanazizf/mlfratchman/assets/100136072/85658ac9-a1d5-4593-b94f-f997a6742c80)
 ## Algoritma
 ![Untitled](https://github.com/rahmanazizf/mlfratchman/assets/100136072/6f492e40-11af-4999-a351-70222256a646)
+### KNN Classifier
+Metode prediksi KNN classifier menggunakan perhitungan probabilitas. Argumen kelas yang menghasilkan nilai probabilitas tertinggi akan menjadi nilai prediksi kelas titik data target.
+![image](https://github.com/rahmanazizf/mlfratchman/assets/100136072/22d801fd-572f-4576-b52b-fe5f1178e92e)
+### KNN Regressor
+Berbeda dengan KNN Classifer, perhitungan untuk prediksi kelas pada KNN regressor lebih sederhana. Nilai kelas/label prediksi dihitung dengan cara merata-ratakan nilai kelas/label dari setiap tetangga terdekat.
+![image](https://github.com/rahmanazizf/mlfratchman/assets/100136072/d1112391-f553-4497-85b9-0978a2f8aa61)
