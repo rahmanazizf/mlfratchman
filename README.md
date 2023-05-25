@@ -17,8 +17,6 @@ $$
 
 Persamaan di atas adalah persamaan umum untuk mencari jarak antara dua titik dengan persamaan Minkowski, Manhattan, dan Euclidean, di mana d merupakan jarak (distance), N merupakan jumlah fitur dan p merupakan pangkat (power). Persamaan Manhattan dapat diperoleh dengan mensubstitusi p dengan 1, Euclidean p = 2 dan selain itu menjadi persamaan Minkowski.
 
-![image](https://github.com/rahmanazizf/mlfratchman/assets/100136072/8f33f8bf-75cf-4bb1-b0be-8bd825c34037)
-
 ## Struktur Modul
 ![image](https://github.com/rahmanazizf/mlfratchman/assets/100136072/85658ac9-a1d5-4593-b94f-f997a6742c80)
 ## Algoritma
