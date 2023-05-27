@@ -4,52 +4,62 @@ import pandas as pd
 
 class NearestNeighbors:
 
-    DIST_TYPE = ('euclidean', 'manhattan')
-
-    def __init__(self, n_neighbors: int = 3, standardize: bool = True, p:int=2) -> None:
-        self._input_data = np.array([])
-        self._output_data = np.array([])
-        self.n_neighbors = n_neighbors
+    def __init__(self, k: int = 3, standardize: bool = True, power: int = 2):
+        self._input_data = []
+        self._output_data = []
+        self.k = k
+        self.p = power
         self.standardize = standardize
-        self.p = p
+        self._std_input = np.array([])
 
     def fit(self, X: np.ndarray, y: np.ndarray):
+        """Fitting data training yang akan digunakan untuk prediksi
+        X: <ndarray> data input
+        y: <ndarray> data output
+        """
         self._input_data = np.array(X).reshape(len(X), -1)
         self._output_data = np.array(y).reshape(len(y), -1)
+        assert self._input_data.shape[0] == self._output_data.shape[0], \
+            f"X and y have different shape, X: {self._input_data.shape}; y: {self._output_data.shape}"
+        if not self.standardize:
+            return
+        self._input_data = self._standardize(self._input_data)
 
-    def _euclidean(self, X_train: np.ndarray, X_target: np.ndarray) -> np.ndarray:
-        return (X_train - X_target)**2
-
-    def _manhattan(self, X_train: np.ndarray, X_target: np.ndarray) -> np.ndarray:
-        return abs(X_train - X_target)
-
-    def _calc_dist(self, X_target: np.ndarray, X_train: np.ndarray) -> np.ndarray:
-        """Menghitung jarak setiap titik terhadap target"""
+    def _calc_dist(self, X_target: np.ndarray) -> np.ndarray:
+        """Menghitung jarak setiap titik data training terhadap target
+        X_target: <ndarray> data target (data yang ingin diprediksi)
+        return
+            <ndarray> jarak setiap titik data training terhadap target
+        """
         assert X_target.shape == (
             1, 2), f"Expected target shape (1, 2), got {X_target.shape}"
-        dist = (abs(X_train - X_target))**self.p
+        dist = (abs(self._input_data - X_target))**self.p
         row_sum = np.sum(dist, axis=1)
-        return row_sum**0.5
+        return row_sum**(1/self.p)
 
     def _predict_proba(self, X_test: np.ndarray):
-        nearest_distances = self._calc_dist(X_test, self._input_data)
+        nearest_distances = self._calc_dist(X_test)
         n_proba = self._output_data[list(
-            np.argsort(nearest_distances)[:self.n_neighbors])]
+            np.argsort(nearest_distances)[:self.k])]
         df = pd.DataFrame(n_proba.value_counts(normalize=True)).reset_index()
         return np.array(df).T
 
-    def _standardize(self):
-        pass
-
+    def _standardize(self, input_data: np.ndarray) -> np.ndarray:
+        """Standardize input data
+        input_data: <ndarray> input data with n-rows and m-features
+        return
+            <ndarray> standardized data
+        """
+        avg = np.mean(input_data, axis=0)
+        stdev = np.std(input_data, axis=0)
+        return (self._input_data - avg)/stdev
 
 def main():
-    nn = NearestNeighbors(n_neighbors=5)
+    nn = NearestNeighbors(k=5)
     inp = np.array(range(10))
     out = np.array(range(11, 21))
     print(inp.size)
     nn.fit(inp, out)
-    print(nn._input_data)
-    print(nn._output_data)
 
 
 if __name__ == '__main__':
