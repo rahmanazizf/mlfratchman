@@ -24,5 +24,4 @@ class KNNClassifier(NearestNeighbors):
         for row in X_test:
             neighbors_proba = self._predict_proba(row)
             y_pred = np.append(y_pred, [neighbors_proba[0, np.argmax(neighbors_proba[1, :])]])
-            print(y_pred)
         return y_pred

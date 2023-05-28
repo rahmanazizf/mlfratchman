@@ -32,7 +32,8 @@ class NearestNeighbors:
         return
             <ndarray> jarak setiap titik data training terhadap target
         """
-        assert X_target.shape == (2, ), f"Expected target shape (1, 2), got {X_target.shape}"
+        assert X_target.shape == (self._input_data.shape[1], 
+                                  ), f"Expected target shape ({self._input_data.shape[0]},), got {X_target.shape}"
         dist = (abs(self._input_data - X_target))**self.p
         row_sum = np.sum(dist, axis=1)
         return row_sum**(1/self.p)
