@@ -11,6 +11,8 @@ class NearestNeighbors:
         self.p = power
         self.standardize = standardize
 
+    # TODO: tambahkan weight
+
     def fit(self, X: pd.DataFrame, y: pd.DataFrame):
         """Fitting data training yang akan digunakan untuk prediksi
         X: <ndarray> data input
