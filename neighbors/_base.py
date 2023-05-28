@@ -10,9 +10,8 @@ class NearestNeighbors:
         self.k = k
         self.p = power
         self.standardize = standardize
-        self._std_input = np.array([])
 
-    def fit(self, X: np.ndarray, y: np.ndarray):
+    def fit(self, X: pd.DataFrame, y: pd.DataFrame):
         """Fitting data training yang akan digunakan untuk prediksi
         X: <ndarray> data input
         y: <ndarray> data output
@@ -31,8 +30,7 @@ class NearestNeighbors:
         return
             <ndarray> jarak setiap titik data training terhadap target
         """
-        assert X_target.shape == (
-            1, 2), f"Expected target shape (1, 2), got {X_target.shape}"
+        assert X_target.shape == (2, ), f"Expected target shape (1, 2), got {X_target.shape}"
         dist = (abs(self._input_data - X_target))**self.p
         row_sum = np.sum(dist, axis=1)
         return row_sum**(1/self.p)
@@ -41,8 +39,18 @@ class NearestNeighbors:
         nearest_distances = self._calc_dist(X_test)
         n_proba = self._output_data[list(
             np.argsort(nearest_distances)[:self.k])]
-        df = pd.DataFrame(n_proba.value_counts(normalize=True)).reset_index()
-        return np.array(df).T
+        # df = pd.DataFrame(n_proba).value_counts(normalize=True).reset_index()
+        # return np.array(df).T
+        df_proba = pd.DataFrame(n_proba).value_counts(normalize = True)
+        cls_proba = np.zeros(shape=(len(self.output_classes()), 2))
+        for i, cls in enumerate(self.output_classes()):
+            cls_proba[0, i] = cls
+            cls_proba[1, i] = df_proba.get(cls, float(0))
+
+        return cls_proba
+    
+    def output_classes(self):
+        return np.unique(self._output_data)
 
     def _standardize(self, input_data: np.ndarray) -> np.ndarray:
         """Standardize input data
