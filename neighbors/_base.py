@@ -3,16 +3,18 @@ import pandas as pd
 
 
 class NearestNeighbors:
-
-    def __init__(self, k: int = 3, standardize: bool = True, power: int = 2):
+    WEIGHT = ('uniform', 'weighted')
+    def __init__(self, k: int = 3, standardize: bool = True, power: int = 2, weight: str = 'uniform'):
+        assert weight not in NearestNeighbors.WEIGHT, f"Invalid weight; {weight}"
         self._input_data = []
         self._output_data = []
         self.k = k
         self.p = power
         self.standardize = standardize
+        self.weight = weight
 
     # TODO: tambahkan weight
-    def weight(self, X_target):
+    def calc_weight(self, X_target):
         dist = np.sum((abs(self._input_data - X_target))**self.p, axis=1)**(1/self.p)
         return 1/(dist)**2
 
@@ -39,6 +41,7 @@ class NearestNeighbors:
                                   ), f"Expected target shape ({self._input_data.shape[0]},), got {X_target.shape}"
         dist = (abs(self._input_data - X_target))**self.p
         row_sum = np.sum(dist, axis=1)
+        if 
         return row_sum**(1/self.p)
 
     def _predict_proba(self, X_test: np.ndarray):

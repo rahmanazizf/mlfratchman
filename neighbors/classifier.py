@@ -8,6 +8,7 @@ class KNNClassifier(NearestNeighbors):
         super().__init__(**kwrds)
 
     def _predict_proba(self, X_test: np.ndarray):
+        # TODO weight diimplementasi di mana ya?
         nearest_distances = self._calc_dist(X_test)
         n_proba = self._output_data[list(
             np.argsort(nearest_distances)[:self.k])]
