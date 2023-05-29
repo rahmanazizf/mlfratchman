@@ -12,6 +12,9 @@ class NearestNeighbors:
         self.standardize = standardize
 
     # TODO: tambahkan weight
+    def weight(self, X_target):
+        dist = np.sum((abs(self._input_data - X_target))**self.p, axis=1)**(1/self.p)
+        return 1/(dist)**2
 
     def fit(self, X: pd.DataFrame, y: pd.DataFrame):
         """Fitting data training yang akan digunakan untuk prediksi
