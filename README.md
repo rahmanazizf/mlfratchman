@@ -8,7 +8,6 @@ y = wx + b
 $$
 
 Ketika membuat model regresi linear, tugas kita adalah mencari nilai w dan b dengan galat sekecil mungkin dari data y dan x yang diketahui dari data training. Tetapi dalam KNN tidak demikian. Kita hanya perlu mencari sejumlah k titik terdekat terhadap titik data yang ingin kita prediksi (target) lalu membandingkan label/output tetangga target tersebut.
-init commit yang salah
 
 ![image](https://github.com/rahmanazizf/mlfratchman/assets/100136072/6a8d92a6-c772-4beb-aa2a-d0edb367e178)
 
