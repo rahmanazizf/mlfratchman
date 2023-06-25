@@ -41,7 +41,9 @@ class NearestNeighbors:
                                   ), f"Expected target shape ({self._input_data.shape[0]},), got {X_target.shape}"
         dist = (abs(self._input_data - X_target))**self.p
         row_sum = np.sum(dist, axis=1)
-        if 
+        # TODO: tambahan weighted knn
+        if self.weight == self.WEIGHT[0]:
+            return row_sum*(self.calc_weight(X_target))
         return row_sum**(1/self.p)
 
     def _predict_proba(self, X_test: np.ndarray):
