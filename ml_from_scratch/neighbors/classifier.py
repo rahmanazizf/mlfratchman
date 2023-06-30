@@ -1,4 +1,4 @@
-from neighbors._base import NearestNeighbors
+from ._base import NearestNeighbors
 import numpy as np
 import pandas as pd
 
