@@ -13,6 +13,6 @@ class KNNRegressor(NearestNeighbors):
 
     def predict(self, X_test: np.ndarray):
         y_pred = np.array([])
-        for row in X_test:
+        for row in np.array(X_test):
             y_pred = np.append(y_pred, [self._average(row)])
         return y_pred

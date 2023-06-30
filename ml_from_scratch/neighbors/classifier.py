@@ -13,16 +13,16 @@ class KNNClassifier(NearestNeighbors):
         n_proba = self._output_data[list(
             np.argsort(nearest_distances)[:self.k])]
         df_proba = pd.DataFrame(n_proba).value_counts(normalize = True)
-        cls_proba = np.zeros(shape=(len(self.output_classes()), 2))
+        cls_proba = np.zeros(shape=(len(self.output_classes()), len(X_test)))
         for i, cls in enumerate(self.output_classes()):
             cls_proba[0, i] = cls
-            cls_proba[1, i] = df_proba.get(cls, float(0))
+            cls_proba[1, i] = df_proba.get(cls)
 
         return cls_proba
 
     def predict(self, X_test: np.ndarray):
         y_pred = np.array([])
-        for row in X_test:
+        for row in np.array(X_test):
             neighbors_proba = self._predict_proba(row)
             y_pred = np.append(y_pred, [neighbors_proba[0, np.argmax(neighbors_proba[1, :])]])
         return y_pred

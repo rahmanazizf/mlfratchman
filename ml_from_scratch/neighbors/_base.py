@@ -5,7 +5,7 @@ import pandas as pd
 class NearestNeighbors:
     WEIGHT = ('uniform', 'weighted')
     def __init__(self, k: int = 3, standardize: bool = True, power: int = 2, weight: str = 'uniform'):
-        assert weight not in NearestNeighbors.WEIGHT, f"Invalid weight; {weight}"
+        assert weight in NearestNeighbors.WEIGHT, f"Invalid weight; {weight}"
         self._input_data = []
         self._output_data = []
         self.k = k
@@ -53,10 +53,10 @@ class NearestNeighbors:
         # df = pd.DataFrame(n_proba).value_counts(normalize=True).reset_index()
         # return np.array(df).T
         df_proba = pd.DataFrame(n_proba).value_counts(normalize = True)
-        cls_proba = np.zeros(shape=(len(self.output_classes()), 2))
+        cls_proba = np.zeros(shape=(len(self.output_classes()), len(X_test)))
         for i, cls in enumerate(self.output_classes()):
             cls_proba[0, i] = cls
-            cls_proba[1, i] = df_proba.get(cls, float(0))
+            cls_proba[1, i] = df_proba.get(cls)
 
         return cls_proba
     
