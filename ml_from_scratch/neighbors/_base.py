@@ -42,23 +42,9 @@ class NearestNeighbors:
         dist = (abs(self._input_data - X_target))**self.p
         row_sum = np.sum(dist, axis=1)
         # TODO: tambahan weighted knn
-        if self.weight == self.WEIGHT[0]:
-            return row_sum*(self.calc_weight(X_target))
+        # if self.weight == self.WEIGHT[0]:
+        #     return row_sum*(self.calc_weight(X_target))
         return row_sum**(1/self.p)
-
-    def _predict_proba(self, X_test: np.ndarray):
-        nearest_distances = self._calc_dist(X_test)
-        n_proba = self._output_data[list(
-            np.argsort(nearest_distances)[:self.k])]
-        # df = pd.DataFrame(n_proba).value_counts(normalize=True).reset_index()
-        # return np.array(df).T
-        df_proba = pd.DataFrame(n_proba).value_counts(normalize = True)
-        cls_proba = np.zeros(shape=(len(self.output_classes()), len(X_test)))
-        for i, cls in enumerate(self.output_classes()):
-            cls_proba[0, i] = cls
-            cls_proba[1, i] = df_proba.get(cls)
-
-        return cls_proba
     
     def output_classes(self):
         return np.unique(self._output_data)
