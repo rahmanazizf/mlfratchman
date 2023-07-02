@@ -1,9 +1,9 @@
 from ._base import NearestNeighbors
-from .classifier import KNNClassifier
-from .regressor import KNNRegressor
+from ._classifier import KNNClassifier
+from ._regressor import KNNRegressor
 
-
-__init__ = [
+__all__ = [
     "NearestNeighbors",
     "KNNClassifier",
-    "KNNRegressor"]
+    "KNNRegressor"
+]

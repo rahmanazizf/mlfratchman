@@ -1,71 +1,29 @@
-import numpy as np
 import pandas as pd
-
+import numpy as np
 
 class NearestNeighbors:
-    WEIGHT = ('uniform', 'weighted')
-    def __init__(self, k: int = 3, standardize: bool = True, power: int = 2, weight: str = 'uniform'):
-        assert weight in NearestNeighbors.WEIGHT, f"Invalid weight; {weight}"
-        self._input_data = []
-        self._output_data = []
-        self.k = k
-        self.p = power
-        self.standardize = standardize
+    def __init__(self, kneighbors: int = 5, power: int = 2, weight: str = 'uniform', 
+                 standardize: bool = True) -> None:
+        self.kneighbors = kneighbors
+        self.power = power
         self.weight = weight
+        self._input_data = np.array([])
+        self._output_data = np.array([])
+        self.standardize = standardize
 
-    # TODO: tambahkan weight
-    def calc_weight(self, X_target):
-        dist = np.sum((abs(self._input_data - X_target))**self.p, axis=1)**(1/self.p)
-        return 1/(dist)**2
+    def fit(self, X_train: pd.DataFrame, y_train: pd.DataFrame):
+        """Menyimpan data ke dalam instance model"""
+        if self.standardize:
+            self._input_data = np.array(self._standardize(X_train.copy()))
+        self._input_data = np.array(X_train.copy())
+        self._output_data = np.array(y_train.copy())
 
-    def fit(self, X: pd.DataFrame, y: pd.DataFrame):
-        """Fitting data training yang akan digunakan untuk prediksi
-        X: <ndarray> data input
-        y: <ndarray> data output
-        """
-        self._input_data = np.array(X).reshape(len(X), -1)
-        self._output_data = np.array(y).reshape(len(y), -1)
-        assert self._input_data.shape[0] == self._output_data.shape[0], \
-            f"X and y have different shape, X: {self._input_data.shape}; y: {self._output_data.shape}"
-        if not self.standardize:
-            return
-        self._input_data = self._standardize(self._input_data)
+    def _calculate_dist(self, X_target):
+        """Menghitung jarak titik target terhadap semua titik data train"""
+        return np.sum(abs(self._input_data - X_target)**self.power, axis = 1)**(1/self.power)
 
-    def _calc_dist(self, X_target: np.ndarray) -> np.ndarray:
-        """Menghitung jarak setiap titik data training terhadap target
-        X_target: <ndarray> data target (data yang ingin diprediksi)
-        return
-            <ndarray> jarak setiap titik data training terhadap target
-        """
-        assert X_target.shape == (self._input_data.shape[1], 
-                                  ), f"Expected target shape ({self._input_data.shape[0]},), got {X_target.shape}"
-        dist = (abs(self._input_data - X_target))**self.p
-        row_sum = np.sum(dist, axis=1)
-        # TODO: tambahan weighted knn
-        # if self.weight == self.WEIGHT[0]:
-        #     return row_sum*(self.calc_weight(X_target))
-        return row_sum**(1/self.p)
-    
-    def output_classes(self):
-        return np.unique(self._output_data)
-
-    def _standardize(self, input_data: np.ndarray) -> np.ndarray:
-        """Standardize input data
-        input_data: <ndarray> input data with n-rows and m-features
-        return
-            <ndarray> standardized data
-        """
-        avg = np.mean(input_data, axis=0)
-        stdev = np.std(input_data, axis=0)
-        return (self._input_data - avg)/stdev
-
-def main():
-    nn = NearestNeighbors(k=5)
-    inp = np.array(range(10))
-    out = np.array(range(11, 21))
-    print(inp.size)
-    nn.fit(inp, out)
-
-
-if __name__ == '__main__':
-    main()
+    def _standardize(self, X):
+        """Melakukan standardisasi data input"""
+        avg = np.mean(X, axis=0)
+        stdev = np.std(X, axis=0)
+        return (X - avg)/stdev
