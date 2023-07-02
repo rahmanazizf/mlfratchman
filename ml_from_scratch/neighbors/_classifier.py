@@ -33,4 +33,4 @@ class KNNClassifier(NearestNeighbors):
         for label in np.unique(self._output_data):
             label_proba.append([label, np.sum(ncls == label)/self.kneighbors])
         proba = np.array(label_proba)[:, 1]
-        return np.argmax(proba)
+        return label_proba[np.argmax(proba)][0]
