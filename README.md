@@ -1,7 +1,7 @@
 # K-Nearest Neighbor (KNN)
 Salah satu proyek dari course Advanced ML di Pacmann Academy
 ## Tentang KNN
-KNN merupakan salah satu algoritma unsupervised learning yang memiliki cara kerja yang cukup sederhana. Termasuk ke dalam model nonparametrik, KNN tidak menghasilkan nilai parameter sebagaimana model parametrik seperti regresi linear. Dalam regresi linear, tujuan kita adalah mencari parameter (koefisien dan konstanta) yang digunakan untuk mengaproksimasi true function.
+KNN merupakan salah satu algoritma supervised learning yang memiliki cara kerja yang cukup sederhana. Termasuk ke dalam model nonparametrik, KNN tidak menghasilkan nilai parameter sebagaimana model parametrik seperti regresi linear. Dalam regresi linear, tujuan kita adalah mencari parameter (koefisien dan konstanta) yang digunakan untuk mengaproksimasi true function.
 
 $$ 
 y = wx + b 
